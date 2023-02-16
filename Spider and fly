@@ -1,0 +1,29 @@
+Не готово
+import math
+shirina=60
+glubina=14
+visota=30
+p_sh=20
+p_gl=0
+p_vi=20
+m_sh=60
+m_gl=7
+m_vi=20
+pyth=0
+if p_vi==m_vi and p_vi!=visota and p_vi!=0 and p_sh<m_sh and m_gl!=0: #ширина мухи макс глуб!=0
+    pyth=(shirina-p_sh)+m_gl
+elif p_vi==m_vi and p_vi!=visota and p_vi!=0 and p_sh>m_sh and m_gl!=0: #щирина мухи 0 глуб!=0
+    pyth=p_sh+m_gl
+elif p_vi==m_vi and p_vi!=visota and p_vi!=0 and p_sh<m_sh and m_gl==0: #ширина мМакс глуб=0
+    pyth=shirina-p_sh
+elif p_vi==m_vi and p_vi!=visota and p_vi!=0 and p_sh>m_sh and m_gl==0: #ширина м0 0 глуб=0
+    pyth=p_sh
+elif p_vi==m_vi and p_vi!=visota and p_vi!=0 and p_sh<m_sh and m_gl==0 and p_vi>visota//2: #ширина >П глуб=макс выше половины
+    pyth=math.sqrt((visota-p_vi)+glubina+(visota-m_vi))**2+(m_sh-p_sh)**2)
+elif p_vi==m_vi and p_vi!=visota and p_vi!=0 and p_sh<m_sh and m_gl==0 and p_vi<visota//2: #ширина >П глуб=макс ниже половины
+    pyth=(shirina-p_sh)
+elif p_vi==m_vi and p_vi!=visota and p_vi!=0 and p_sh<m_sh and m_gl==0 and p_vi>visota//2: #ширина >П глуб=макс выше половины
+    pyth=math.sqrt((p_sh-m_sh))**2+(p_vi+glubina+m_vi)**2)
+elif p_vi==m_vi and p_vi!=visota and p_vi!=0 and p_sh<m_sh and m_gl==0 and p_vi<visota//2: #ширина >П глуб=макс ниже половины
+    pyth=math.sqrt((visota-p_vi)+glubina+(visota-m_vi))**2+(m_sh-p_sh)**2)
+    
