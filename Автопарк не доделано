@@ -1,0 +1,127 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace ConsoleApp114
+{
+    internal class Program
+    {
+        public class Avto{
+            public string Bus { get; set; }
+            public string GruzAvto { get; set; }
+            public DateLine TOBus {get; set;}
+            public DateLine TOGruz {get; set;}
+         }
+         public class Emploee{
+            public string Name { get; set; }
+            public string LastP{get;set;} 
+             public DateLine DateSt { get; set; }
+             public DateLine DateFin{get;set;} 
+             
+         public int Stazh(DateLine DateSt, DateLine DateFin,int num);
+             DateTime d1 = DateSt.Date, d2=DateTime.Now.Date,d3=DateFin.Date;
+             int Allstazh = (int)Math.Abs((d2-d1).TotalDays);
+             int Xstazh = (int)Math.Abs((d3-d1).TotalDays);
+             if (num==1) return Allstazh;
+             if (num==2) return Xstazh; else Break();}
+         }
+         public class Kings:Emploee{
+             
+         }
+         public class Helper:Emploee{
+             
+         }
+         public class Driver:Emploee{
+             
+             
+             
+         public static int Break(){
+                throw new IndexOutOfRangeException();
+            }
+        static void Main()
+        {
+            var productList = new List<Product>();
+            
+            int n = Convert.ToInt32(Console.ReadLine());
+            int i = 0;
+            StreamReader bus = new StreamReader("bus.txt");
+            StreamReader gruz = new StreamReader("gruz.txt");
+            string[] Bus = new string[n];
+            string[] GruzAvto = new string[n];
+            DateLine[] TOB = new DateLine[n];
+            DateLine[] TOG = new DateLine[n];
+            
+            for (int i=0;i<n;i++){
+                var avto = new Avto();
+                string s=null;
+                s=bus.ReadLine().split();
+                Bus[i]=s[0];
+                TOB[i]=s[1];
+                s=null;
+                avto.Bus = Bus[i];
+                avto.TOBus = TOB[i];
+            }
+            
+            for (int i=0;i<n;i++){
+                var avto = new Avto();
+                string s=null;
+                s=gruz.ReadLine().split();
+                GruzAvto[i]=s[0];
+                TOG[i]=s[1];
+                s=null;
+                avto.GruzAvto = GruzAvto[i];
+                avto.TOGruz = TOG[i];
+            }
+            
+            for (int i=0;i<n;i++){
+                var driv = new Driver();
+                st=driver.ReadLine();
+                string[] s=st.split();
+                Name[i]=s[0];
+                LastP[i]=s[1];
+                DateSt[i]=s[2];
+                DateFin[i]=s[3];
+                driv.Name = Name[i];
+                driv.LastP = LastP[i];
+                driv.DateSt = DateSt[i];
+                driv.DateFin = DateFin[i];
+            }
+            Console.WriteLine("Меню");
+            Console.WriteLine("1. База авто");
+            Console.WriteLine("2. Поиск по водителю");
+            Console.WriteLine("3. Данные о ТО");
+            Console.WriteLine("4. Работники");
+            Console.WriteLine("5. Приказы");
+            Console.WriteLine("6. Выход");
+            int a=Convert.ToInt32(Console.ReadLine());
+            if (a==1){
+                Print(n,Name,Date,ExerDate,Master,Sales_date,Sales_num,Num);
+            }
+            if (a==2){
+                Console.WriteLine(F_Name(n,Master,Name));
+            }
+            if (a==3){
+                Console.WriteLine(New(n,Date,ExerDate,Name));
+            }
+            if (a==4){
+                Console.WriteLine(Left(n,Num, Sales_num,Name));
+            }
+            if (a==5){
+                Console.WriteLine(Zero(n,Num,Sales_num,Name));
+            }
+            if (a==6)Break(); else Break();
+            Console.ReadLine();
+        }
+    }
+}
+Файлы: Bus
+q815uf 1915.03.12
+i009hf 2023.01.01
+h611ma 2011.09.01
+GruzAvto
+e658uh 1999.07.18
+r735jd 2005.05.05
+i837je 1814.07.17
+Driver
+Дядя Петя Гараж 1976.12.31 2022.12.30
