@@ -8,84 +8,116 @@ namespace ConsoleApp114
     internal class Program
     {
         public class Avto{
-            public string Bus { get; set; }
-            public string GruzAvto { get; set; }
-            public DateLine TOBus {get; set;}
-            public DateLine TOGruz {get; set;}
+            public Array[] Bus { get; set; }
+            public Array[] GruzAvto { get; set; }
+            public DateTime TOBus {get; set;}
+            public DateTime TOGruz {get; set;}
+            
+            public static int Print(int n, List <avtoList>,List <avtoList2>)
+            {
+                int i = 0;
+                for (i = 0; i < n; i++){
+                    Console.WriteLine(" __________________________________________________\n");
+                    Console.WriteLine($" | {avtoList[i]} | {avtoList2[i]} |\n");
+                }
+                return 0;
+            }
+            
          }
          public class Emploee{
             public string Name { get; set; }
-            public string LastP{get;set;} 
-             public DateLine DateSt { get; set; }
-             public DateLine DateFin{get;set;} 
-             
-         public int Stazh(DateLine DateSt, DateLine DateFin,int num);
+            public string LastP {get;set;} 
+             public DateTime DateSt { get; set; }
+             public DateTime DateFin{get;set;} 
+             public string TypeWork {get;set;}
+         }
+         public class Kings:Emploee{
+             public string Order{get; set;}
+         }
+         public class Helper:Emploee{
+             public int Work(int n){
+                 for (int i=0;i<n;i++){
+                     Write($"{helpList[i]}, ");
+                 }
+             }
+         }
+         public class Driver:Emploee{
+            public int Stazh(DateTime DateSt, DateTime DateFin,int num){
              DateTime d1 = DateSt.Date, d2=DateTime.Now.Date,d3=DateFin.Date;
              int Allstazh = (int)Math.Abs((d2-d1).TotalDays);
              int Xstazh = (int)Math.Abs((d3-d1).TotalDays);
              if (num==1) return Allstazh;
-             if (num==2) return Xstazh; else Break();}
-         }
-         public class Kings:Emploee{
-             
-         }
-         public class Helper:Emploee{
-             
-         }
-         public class Driver:Emploee{
-             
-             
+             if (num==2) return Xstazh; else Break();
+            }
+         }  
              
          public static int Break(){
                 throw new IndexOutOfRangeException();
             }
         static void Main()
         {
-            var productList = new List<Product>();
-            
             int n = Convert.ToInt32(Console.ReadLine());
-            int i = 0;
             StreamReader bus = new StreamReader("bus.txt");
             StreamReader gruz = new StreamReader("gruz.txt");
+            StreamReader driv = new StreamReader("driver.txt");
+            StreamReader kings = new StreamReader("KingOrders.txt");
+            StreamReader helper = new StreamReader("helper.txt");
             string[] Bus = new string[n];
             string[] GruzAvto = new string[n];
-            DateLine[] TOB = new DateLine[n];
-            DateLine[] TOG = new DateLine[n];
+            string[] Orders = new string[n];
+            string[] Work = new string[n];
+            DateTime[] TOB = new DateTime[n];
+            DateTime[] TOG = new DateTime[n];
             
+            var avtoList = new List<Avto>();
             for (int i=0;i<n;i++){
-                var avto = new Avto();
-                string s=null;
-                s=bus.ReadLine().split();
+                string st=bus.ReadLine();
+                string[] s=st.split();
                 Bus[i]=s[0];
                 TOB[i]=s[1];
-                s=null;
-                avto.Bus = Bus[i];
-                avto.TOBus = TOB[i];
+                st=null;
+                avtoList[i].Bus = Bus[i];
+                avtoList[i].TOBus = TOB[i];
             }
-            
+            var avtoList2 = new List<Avto>();
             for (int i=0;i<n;i++){
-                var avto = new Avto();
-                string s=null;
-                s=gruz.ReadLine().split();
+                string st=gruz.ReadLine();
+                string[] s=st.split();
                 GruzAvto[i]=s[0];
                 TOG[i]=s[1];
-                s=null;
-                avto.GruzAvto = GruzAvto[i];
-                avto.TOGruz = TOG[i];
+                st=null;
+                avtoList2[i].GruzAvto = GruzAvto[i];
+                avtoList2[i].TOGruz = TOG[i];
             }
-            
+            var drivList = new List<Emploee>();
             for (int i=0;i<n;i++){
-                var driv = new Driver();
-                st=driver.ReadLine();
+                string st=driver.ReadLine();
                 string[] s=st.split();
+                st=null;
                 Name[i]=s[0];
                 LastP[i]=s[1];
                 DateSt[i]=s[2];
                 DateFin[i]=s[3];
-                driv.Name = Name[i];
-                driv.LastP = LastP[i];
-                driv.DateSt = DateSt[i];
-                driv.DateFin = DateFin[i];
+                drivList[i].Name = Name[i];
+                drivList[i].LastP = LastP[i];
+                drivList[i].DateSt = DateSt[i];
+                drivList[i].DateFin = DateFin[i];
+            }
+            var kingList = new List<Kings>();
+            for (int i=0;i<n;i++){
+                string s=null;
+                s=kings.ReadLine();
+                Orders[i]=s;
+                s=null;
+                kingList[i].Order = Orders[i];
+            }
+            var helpList = new List<Emploee>();
+            for (int i=0;i<n;i++){
+                string s=null;
+                s=helper.ReadLine();
+                Work[i]=s;
+                s=null;
+                helpList[i].TypeWork = Work[i];
             }
             Console.WriteLine("Меню");
             Console.WriteLine("1. База авто");
@@ -96,32 +128,42 @@ namespace ConsoleApp114
             Console.WriteLine("6. Выход");
             int a=Convert.ToInt32(Console.ReadLine());
             if (a==1){
-                Print(n,Name,Date,ExerDate,Master,Sales_date,Sales_num,Num);
+                Print(n,avtoList,avtoList2);
             }
             if (a==2){
-                Console.WriteLine(F_Name(n,Master,Name));
+                Work(n);
             }
             if (a==3){
-                Console.WriteLine(New(n,Date,ExerDate,Name));
+                Console.WriteLine("sfg");
             }
             if (a==4){
-                Console.WriteLine(Left(n,Num, Sales_num,Name));
+                Console.WriteLine("sjt");
             }
             if (a==5){
-                Console.WriteLine(Zero(n,Num,Sales_num,Name));
+                Console.WriteLine("zgj");
             }
             if (a==6)Break(); else Break();
             Console.ReadLine();
         }
     }
 }
-Файлы: Bus
+Файлы: bus
 q815uf 1915.03.12
 i009hf 2023.01.01
 h611ma 2011.09.01
-GruzAvto
+gruz
 e658uh 1999.07.18
 r735jd 2005.05.05
 i837je 1814.07.17
-Driver
-Дядя Петя Гараж 1976.12.31 2022.12.30
+driver
+ДядяПетя Гараж 1976.12.31 2022.12.30
+ТетяГааааля Чердак 1799.11.06 1976.12.31
+ЕгоВысочествоАлександр ШоферПрезидента 1999.01.01 2023.01.01
+KingOrders
+Приказ №387568 об увеличении заработной платы в 0.5
+Приказ №872360 о расширении территорий, пригодных для маршрута 
+Приказ №402584 о покупке биотуалета для водителей маршрутных транспортных средств
+helper
+уборщица
+боевоеОружее
+слесарь
