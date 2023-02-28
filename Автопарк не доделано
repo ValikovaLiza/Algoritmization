@@ -2,44 +2,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 namespace ConsoleApp114
 {
     internal class Program
     {
         public class Avto{
-            public Array[] Bus { get; set; }
-            public Array[] GruzAvto { get; set; }
-            public DateTime TOBus {get; set;}
-            public DateTime TOGruz {get; set;}
-            
-            public static int Print(int n, List <avtoList>,List <avtoList2>)
-            {
-                int i = 0;
-                for (i = 0; i < n; i++){
-                    Console.WriteLine(" __________________________________________________\n");
-                    Console.WriteLine($" | {avtoList[i]} | {avtoList2[i]} |\n");
-                }
-                return 0;
-            }
-            
+            public string[] Bus { get; set; }
+            public string[] GruzAvto { get; set; }
+            public DateTime[] TOBus {get; set;}
+            public DateTime[] TOGruz {get; set;}
          }
          public class Emploee{
-            public string Name { get; set; }
-            public string LastP {get;set;} 
-             public DateTime DateSt { get; set; }
-             public DateTime DateFin{get;set;} 
-             public string TypeWork {get;set;}
+            public string[] Name { get; set; }
+            public string[] LastP {get;set;} 
+             public DateTime[] DateSt { get; set; }
+             public DateTime[] DateFin{get;set;} 
+             public string[] TypeWork {get;set;}
          }
          public class Kings:Emploee{
-             public string Order{get; set;}
+             public string[] Order{get; set;}
          }
          public class Helper:Emploee{
-             public int Work(int n){
-                 for (int i=0;i<n;i++){
-                     Write($"{helpList[i]}, ");
-                 }
-             }
          }
          public class Driver:Emploee{
             public int Stazh(DateTime DateSt, DateTime DateFin,int num){
@@ -48,6 +33,7 @@ namespace ConsoleApp114
              int Xstazh = (int)Math.Abs((d3-d1).TotalDays);
              if (num==1) return Allstazh;
              if (num==2) return Xstazh; else Break();
+             return 0;
             }
          }  
              
@@ -128,10 +114,11 @@ namespace ConsoleApp114
             Console.WriteLine("6. Выход");
             int a=Convert.ToInt32(Console.ReadLine());
             if (a==1){
-                Print(n,avtoList,avtoList2);
+                for (int i=0;i<n;i++){ Console.Write($"Автобусы: {avtoList[i].Bus}");}
+                for (int i=0;i<n;i++){ Console.Write($"Грузовые автомобили: {avtoList2[i].GruzAvto}");}
             }
             if (a==2){
-                Work(n);
+                for (int i=0;i<n;i++){ Console.Write($"Доп.работники: {helpList[i].TypeWork}");}
             }
             if (a==3){
                 Console.WriteLine("sfg");
