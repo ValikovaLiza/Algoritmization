@@ -2,38 +2,38 @@
 Пользователь выбирает олперацию и ввести 2 числа. После этого программа вызывает соотвествующий делегат 
 и выводит результата на экран. В программе должен присутствовать интерфейс Imath который содержит 
 методды для всех 4 мат операций.
+Интерфейс работает, делегат - нет
 using System;
-interface IMath
-{
-    double Multiplication(double a, double b);
-    double Dividing(double a, double b);
-    double Addition(double a, double b);
-    double Subtraction(double a, double b);
-}
-class math:IMath{
-    double  a, b;
-    public double x{
-        set { a = value; }
-        get { return a; }
-        }
-    public double y{
-        set { b = value; }
-        get { return b; }
-        }
-    public void A(int x, int y){
-        this.x = x;
-        this.y = y;
-        }
-    public double Addition(){return x + y;}
-
-    public double Subtraction(){return x - y;}
-
-    public double Multiplication(){return x * y; }
-
-    public double Dividing(){return x / y;}
-}
 class HelloWorld {
-    delegate double Operation(double a, double b);
+public interface IMath{
+    double Multiplication(double a,double b);
+    double Dividing(double a,double b);
+    double Addition(double a,double b);
+    double Subtraction(double a,double b);
+}
+
+public delegate double Operation(double a, double b);
+
+class math: IMath{ 
+    double IMath.Multiplication(double a,double b)
+    {
+        return a * b;
+    }
+    double IMath.Dividing(double a,double b)
+    {
+        if (b==0) Console.WriteLine("Who");
+        return a*Math.Pow(b,-1);
+    }
+    double IMath.Addition(double a,double b)
+    {
+        return a + b;
+    }
+    double IMath.Subtraction(double a,double b)
+    {
+        return a - b;
+    }
+}
+
   static void Main() {
     Console.WriteLine("Меню");
     Console.WriteLine("1. Умножение");
@@ -42,13 +42,15 @@ class HelloWorld {
     Console.WriteLine("4. Вычитание");
     int s=Convert.ToInt32(Console.ReadLine());
     double a=Convert.ToDouble(Console.ReadLine()),b=Convert.ToDouble(Console.ReadLine());
-    math obj1 = new math(a, b);
-    obj1.Multiplication();
+    var math_for_us = new math();
+    Operation op1 = new(IMath.Multiplication);
+    double result=op1(a,b);
+    Console.WriteLine(result);
     switch (s){
-        case 1: Operation multi = obj1.Multiplication; multi(a,b);break;
-        case 2: Operation divid = obj1.Dividing; divid(a,b);break;
-        case 3: Operation add = obj1.Addition; add(a,b);break;
-        case 4: Operation sub = obj1.Subtraction; sub(a,b);break;
+        case 1: Console.WriteLine(((IMath) math_for_us).Multiplication(a,b));break;
+        case 2: Console.WriteLine(((IMath) math_for_us).Dividing(a,b));break;
+        case 3: Console.WriteLine(((IMath) math_for_us).Addition(a,b));break;
+        case 4: Console.WriteLine(((IMath) math_for_us).Subtraction(a,b));break;
     }
     
   }
