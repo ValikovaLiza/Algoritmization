@@ -1,0 +1,45 @@
+length=[[float("inf"),6,4,8,7],
+        [6,float("inf"),7,11,7],
+        [4,7,float("inf"),4,3],
+        [8,11,4,float("inf"),5],
+        [7,7,3,5,float("inf")]]
+min_num=[]
+sum_min=0
+min_now=0
+count=0
+for line in length:
+    min_now=min(line)
+    min_num.append(min_now)
+    sum_min+=min(line)
+    for i in line:
+        line[count]=i-min_now
+        count+=1
+    count=0
+    
+    
+min_num=[]
+sum_min2=0
+min_now=0
+count=0
+dopList=[]
+for d in range(5):
+    new_col=[new_col[d] for new_col in length]
+    min_now=min(new_col)
+    min_num.append(min_now)
+    sum_min2+=min_now
+    for j in new_col:
+        new_col[count]=j-min_now
+        count+=1
+    count=0
+    dopList.append(new_col)
+for d in range(5):
+    dopList2=[length[d] for length in dopList]
+    length[d]=dopList2
+print(length)
+
+min_st_col=0
+for i in range(5):
+    min_st_col=min(i)
+    for j in range(5):
+        if length[i][j]==0:
+       
