@@ -38,8 +38,13 @@ for d in range(5):
 print(length)
 
 min_st_col=0
-for i in range(5):
-    min_st_col=min(i)
-    for j in range(5):
+MIN=738437
+for j in range(5):
+    for i in range(5):
         if length[i][j]==0:
-       
+            if length[i][j]<MIN:
+                MIN=length[i][j]
+            min_st_col=min(length[i]) 
+    min_st_col+=MIN
+print(min_st_col)        
+        
