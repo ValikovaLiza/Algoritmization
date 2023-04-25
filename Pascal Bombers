@@ -1,0 +1,188 @@
+{0-ничего 1-взывстена 2-стена 3-бомба 4-герой 5-враг}
+const 
+ MAX_FIELD = 9;
+ MAX_BOMB = 5;
+type
+ TheBomb = record
+ x:integer;
+ y:integer;
+ power:integer;
+ deployedTime:longint;
+ explosionTime:longint;
+ end;
+ 
+ table = array [1 .. MAX_FIELD , 1 .. MAX_FIELD ] of integer;
+ BombTable = array[1..MAX_BOMB] of TheBomb;
+ 
+var
+ matx: table;
+ Bombs: BombTable;
+ BOMB_SET: integer;
+
+///================ BOMBS ARRAY =========================
+
+procedure AppendBomb(var Bombs:BombTable; Bomb:TheBomb);
+var i:integer;
+begin
+ i:=1;
+ while (Bombs[i].x<>0) and (i<MAX_BOMB) do inc(i);
+
+ with Bombs[i] do
+ begin
+ x:=Bomb.x;
+ y:=Bomb.y;
+ power:=Bomb.power;
+ deployedTime:=Bomb.deployedTime;
+ explosionTime:=Bomb.explosionTime;
+ end;
+ inc(BOMB_SET);
+end;
+
+procedure DeleteBomb(Var Bombs:BombTable; i:integer);
+Begin
+ 
+ While i+1 < MAX_BOMB do
+ begin
+ Bombs[i]:= Bombs[i+1];
+ inc(i);
+ end;
+
+ with Bombs[MAX_BOMB] do
+ begin
+ x:=0;
+ y:=0;
+ power:=0;
+ deployedTime:=0;
+ explosionTime:=0;
+ end;
+ dec(BOMB_SET);
+end;
+
+procedure ExplodeBomb(var arr:table ; Bomb:TheBomb);
+var n,m,i,j:integer;
+Begin
+ i:=Bomb.x;
+ j:=Bomb.y;
+
+ For n:=i-Bomb.power to i+Bomb.power do
+ begin
+ if (n>=1) and (n<=MAX_FIELD) then
+ case arr[n,j] of
+ 1: arr[n,j]:=0;
+ 3: arr[n,j]:=0;
+ 4: arr[n,j]:=0;
+ 5: arr[n,j]:=0;
+ end;
+ end;
+
+ For m:=j-Bomb.power to j+Bomb.power do
+ begin
+ if (m>=1) and (m<=MAX_FIELD) then
+ case arr[i,m] of
+ 1: arr[i,m] :=0;
+ 3: arr[i,m] :=0;
+ 4: arr[i,m] :=0;
+ 5: arr[i,m] :=0;
+ end;
+
+ end;
+
+end;
+
+procedure SetBomb(x,y:integer);
+var Bomb:TheBomb;
+
+begin
+ Bomb.x:=x;
+ Bomb.y:=y;
+ Bomb.power:=1;
+ Bomb.deployedTime:=1;
+ Bomb.explosionTime:=2;
+
+ AppendBomb(Bombs,Bomb);
+ matx[x,y]:=3;
+end;
+
+procedure ExplodeWhenReady(var Bombs:BombTable);
+var n:integer;
+begin
+ for n:=1 to BOMB_SET do
+ begin
+ ExplodeBomb(matx, Bombs[n]);
+ DeleteBomb(Bombs,n);
+ end;
+
+end;
+
+//================END BOMBS=========================
+
+procedure graf( var arr:table);
+var i,j: integer;
+begin
+ randomize;
+ for i:=1 to MAX_FIELD do
+ for j:= 1 to MAX_FIELD do
+ arr[i,j]:= random(2);
+end;
+
+procedure graV( var arr: table);
+var
+ i,j: integer;
+begin
+ for i:=1 to MAX_FIELD do
+ for j:= 1 to MAX_FIELD do
+ begin
+ arr[i,1]:= 2;
+ arr[i,9]:=2;
+ arr[9,j]:=2;
+ arr[1,j]:= 2;
+
+ arr[3,3]:= 2;
+ arr[3,5]:=2;
+ arr[3,7]:=2;
+
+ arr[5,3]:= 2;
+ arr[5,5]:=2;
+ arr[5,7]:=2;
+
+ arr[7,3]:= 2;
+ arr[7,5]:=2;
+ arr[7,7]:=2;
+ end;
+end;
+
+procedure print ( var arr: table);
+var i,j: integer;
+begin
+ for i:=1 to MAX_FIELD do
+ begin
+ for j:= 1 to MAX_FIELD do
+ write(arr[i,j], ' ');
+
+ writeln(' ');
+end;
+end;
+
+begin
+ {readKey(b, a, w, s, d);}
+ graf(matx);
+ graV(matx);
+
+ print(matx);
+ Writeln('Исходное поле');
+
+ Setbomb(3,4);
+ writeln;
+ writeln;
+
+ print(matx);
+ Writeln('Установленна бомба');
+
+ writeln;
+ writeln;
+
+ ExplodeWhenReady(Bombs);
+
+ print(matx);
+ Writeln('Взрыв бомбы');
+end.
