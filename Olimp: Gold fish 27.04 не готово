@@ -7,7 +7,7 @@ for i in range (int(num_words[0])):
     l_words.append(f.readline().rstrip())
 num_lett_start=f.readline().split()
 for i in range (int(num_lett_start[0])):
-    l_lett_start.append(f.readline().rstrip('\n').split(' '))
+    l_lett_start.append(f.readline().rstrip('\n').split(' '))           запись в списки
 num_lett_end=f.readline().split()
 for i in range (int(num_lett_end[0])):
     l_lett_end.append(f.readline().rstrip('\n').split(' '))
@@ -20,19 +20,19 @@ for i in l_words:
     c=0
     d=0
     for j in range(len(l_lett_start)):
-        if i[:1]!=l_lett_start[j][count]:
+        if i[:1]!=l_lett_start[j][count]:          проверка на совпадение 1 буквы
             c+=1
         if c==len(l_lett_start):
             l_words.remove(i)
     for j in range(len(l_lett_end)):
-        if i[-1:]!=l_lett_end[j][count]:
+        if i[-1:]!=l_lett_end[j][count]:             проверка на совпадение последней буквы
             d+=1
         if d==len(l_lett_end):
             l_words.remove(i)
 for j in range(len(l_words)):
     if i[:1]==l_lett_start[j][count]:
         if l_lett_start[j][count]!=0:
-            l_lett_start[j][count2]= int(l_lett_start[j][count2])-1 
+            l_lett_start[j][count2]= int(l_lett_start[j][count2])-1            попытка удаления всего лишнего
         elif l_lett_start[j][count]==0:
             l_words.remove(j)
     if i[-1:]==l_lett_end[j][count]:
