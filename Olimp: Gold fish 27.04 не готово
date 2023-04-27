@@ -1,0 +1,40 @@
+f=open("f.txt","r")
+l_words=[]
+l_lett_start=[]
+l_lett_end=[]
+num_words=f.readline().split()
+for i in range (int(num_words[0])):
+    l_words.append(f.readline().rstrip())
+num_lett_start=f.readline().split()
+for i in range (int(num_lett_start[0])):
+    l_lett_start.append(f.readline().rstrip('\n').split(' '))
+num_lett_end=f.readline().split()
+for i in range (int(num_lett_end[0])):
+    l_lett_end.append(f.readline().rstrip('\n').split(' '))
+print(l_words)
+print(l_lett_start)
+print(l_lett_end)
+count=0
+count2=1
+for i in l_words:
+    c=0
+    d=0
+    for j in range(len(l_lett_start)):
+        if i[:1]!=l_lett_start[j][count]:
+            c+=1
+        if c==len(l_lett_start):
+            l_words.remove(i)
+    for j in range(len(l_lett_end)):
+        if i[-1:]!=l_lett_end[j][count]:
+            d+=1
+        if d==len(l_lett_end):
+            l_words.remove(i)
+for j in range(len(l_words)):
+    if i[:1]==l_lett_start[j][count]:
+        if l_lett_start[j][count]!=0:
+            l_lett_start[j][count2]= int(l_lett_start[j][count2])-1 
+        elif l_lett_start[j][count]==0:
+            l_words.remove(j)
+    if i[-1:]==l_lett_end[j][count]:
+        l_lett_end[j][count2]=int(l_lett_start[j][count2])-1
+print(l_words)
