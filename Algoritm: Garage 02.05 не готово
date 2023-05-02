@@ -1,0 +1,41 @@
+using System;
+class Avto{
+    public string mark;
+    public string year;
+    public Avto(string mark, string year){
+        this.mark = mark;
+        this.year = year;
+    }
+}
+
+public class Garage: Avto {
+    public Array[] gar = name;
+}
+
+delegate void Car(ref string name);
+
+class Wash{
+    static void fin (ref string n){
+        Console.WriteLine($"{n} помыта");
+    }
+}
+
+
+class HelloWorld {
+    public static void Info(out List<Avto> list1){
+        list1 = new List<Avto>();
+        int a= Convert.ToInt32(Console.ReadLine());
+        for (int i=0;i<a;i++){
+            string mark = Console.ReadLine();
+            string year = Console.ReadLine();
+            list1.Add(new Avto(mark, year));
+        }
+    }
+  static void Main() {
+        List<Avto> list1 = new List<Avto>();
+        List<Avto>A = new List<Avto>();
+        Info(out list1);
+        A.AddRange(list1);
+    
+  }
+}
