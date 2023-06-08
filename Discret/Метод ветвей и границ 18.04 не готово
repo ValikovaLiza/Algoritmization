@@ -1,50 +1,46 @@
-length=[[float("inf"),6,4,8,7],
-        [6,float("inf"),7,11,7],
-        [4,7,float("inf"),4,3],
-        [8,11,4,float("inf"),5],
-        [7,7,3,5,float("inf")]]
-min_num=[]
-sum_min=0
-min_now=0
-count=0
-for line in length:
-    min_now=min(line)
-    min_num.append(min_now)
-    sum_min+=min(line)
-    for i in line:
-        line[count]=i-min_now
-        count+=1
-    count=0
-    
-    
-min_num=[]
-sum_min2=0
-min_now=0
-count=0
-dopList=[]
-for d in range(5):
-    new_col=[new_col[d] for new_col in length]
-    min_now=min(new_col)
-    min_num.append(min_now)
-    sum_min2+=min_now
-    for j in new_col:
-        new_col[count]=j-min_now
-        count+=1
-    count=0
-    dopList.append(new_col)
-for d in range(5):
-    dopList2=[length[d] for length in dopList]
-    length[d]=dopList2
-print(length)
+def min_G(inp):
+    return min([G[m][inp] for m in range(n)])
 
-min_st_col=0
-MIN=738437
-for j in range(5):
-    for i in range(5):
-        if length[i][j]==0:
-            if length[i][j]<MIN:
-                MIN=length[i][j]
-            min_st_col=min(length[i]) 
-    min_st_col+=MIN
-print(min_st_col)        
-        
+
+with open('Input.txt', 'r') as Inp:
+    G = [list(map(float, line.split())) for line in Inp.read().split('\n')]
+    print(' Input matrix: ')
+    [print(*line) for line in G]
+
+count = 0
+for num in range(len(G)-2):
+    print(f'\n Iteration №{num+1}')
+    n = len(G)
+
+    for i in range(n):
+        min_line = min(G[i])
+        if min_line != float('inf'):
+            count += min_line
+            for j in range(n):
+                G[i][j] -= min_line
+    [print(*line) for line in G]
+    print()
+
+    for j in range(n):
+        min_row = min_G(j)
+        if min_row != float('inf'):
+            count += min_row
+            for i in range(n):
+                G[i][j] -= min_row
+    [print(*line) for line in G]
+    print('\t'*n, count)
+
+    zeros = []
+    for i in range(n):
+        for j in range(n):
+            if G[i][j] == 0.0:
+                G[i][j] = float('inf')
+                zeros.append((min(G[i]) + min_G(j), i, j))
+                G[i][j] = 0.0
+    arg, v, u = max(zeros)
+    G[u][v] = float('inf')
+    for x in range(n):
+        G[x][u] = float('inf')
+        G[v][x] = float('inf')
+    [print(*line) for line in G]
+
